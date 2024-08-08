@@ -45,4 +45,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function courseStudents()
+    {
+        return $this->hasMany(CourseStudent::class);
+    }
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
+    public function subscribeTransactions()
+    {
+        return $this->hasMany(SubscribeTransaction::class);
+    }
+    public function hasPaidSubscribe($subscribeTransactionId)
+    {
+        return SubscribeTransaction::where('user_id', $this->id)->where('is_paid', true)->where('id', $subscribeTransactionId)->exists();
+        ;
+    }
 }
